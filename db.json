@@ -27,6 +27,13 @@
       "category": "Transportation",
       "amount": "900",
       "id": 14
+    },
+    {
+      "date": "2021-09-16",
+      "description": "Salary",
+      "category": "Income",
+      "amount": "3000",
+      "id": 15
     }
   ]
 }
