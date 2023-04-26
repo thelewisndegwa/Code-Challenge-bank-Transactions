@@ -88,3 +88,7 @@ input[type=submit] {
 input[type=submit]:hover {
   background-color: #45a049;
 }
+button:hover {
+  opacity:1;
+  background-color: #f44336
+}
