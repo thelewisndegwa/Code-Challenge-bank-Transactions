@@ -1,90 +1,77 @@
-import React from "react"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 
-
-
-
-function TransTable(){
-
+function TransTable() {
   const [data, setData] = useState([]);
-  const [formData, setFormData] = useState({
-    date: '',
-    description: '',
-    category: '',
-    amount: ''
-  });
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch('http://localhost:3003/transactions')
+    // Fetch data from the API endpoint when the component mounts
+    fetch("http://localhost:3003/transactions")
       .then(response => response.json())
       .then(json => setData(json))
       .catch(error => alert(error))
   }, []);
-  
-  
-    // const [selectedTransactions, setSelectedTransactions] = useState("All");
- const [Transactions, setTransactions] = useState([]);
-    useEffect(() =>
- {
-   fetch("http://localhost:3003/transactions")
-     .then((r) => r.json())
-     .then((data) => setTransactions(data));
- }, [])
- const handleDelete = id => {
-  const newData = data.filter(Transaction => Transaction.id !== id);
-  setData(newData); 
 
-// DELETE request to remove the transaction data from the JSON file
-fetch(`http://localhost:3003/transactions/${id}`, {
-method: 'DELETE',
-headers: {
-  'Content-Type': 'application/json'
-}
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.log(error));
-};
+  const handleDelete = id => {
+    // Filter out the deleted transaction from the current data array
+    const newData = data.filter(transaction => transaction.id !== id);
+    setData(newData);
 
-const filteredData = data.filter(Transaction => Transaction.description.toLowerCase().includes(searchTerm.toLowerCase()));
-    return (<div className="Trans">
-    <h1>Transactions</h1>
-    <table id='table'>
-      <thead>
-        <tr>
-          <th>ID</th>
+    // Send a DELETE request to the API to remove the transaction
+    fetch(`http://localhost:3003/transactions/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.log(error));
+  };
 
-          <th>Date</th>
+  const filteredData = data.filter(transaction =>
+    transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-          <th>Description</th>
-          
-          <th>Category</th>
-          
-          <th>Amount</th>
-
-          <th>Button</th>
-        </tr>
-      </thead>
-      <tbody>
-        {Transactions.map((Transaction, index) => (
-          <tr key={index}>
-           <td>{Transaction.id}</td>
-              
-           <td>{Transaction.date}</td>
-               
-           <td>{Transaction.description}</td>
-               
-           <td>{Transaction.category}</td>
-               
-           <td>{Transaction.amount}</td>
-           <td><button onClick={() => handleDelete(Transaction.id)}>Delete</button></td>
+  return (
+    <div className="Trans">
+      <h1>Transactions</h1>
+      <input
+        type="text"
+        placeholder="Search by description"
+        value={searchTerm}
+        onChange={e => setSearchTerm(e.target.value)}
+      />
+      <table id="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Button</th>
           </tr>
-          
-        ))}
-      </tbody>
-    </table>
-   </div>
-    )
-        }
-  export default TransTable;
+        </thead>
+        <tbody>
+          {filteredData.map(transaction => (
+            <tr key={transaction.id}>
+              <td>{transaction.id}</td>
+              <td>{transaction.date}</td>
+              <td>{transaction.description}</td>
+              <td>{transaction.category}</td>
+              <td>{transaction.amount}</td>
+              <td>
+                <button onClick={() => handleDelete(transaction.id)}>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default TransTable;

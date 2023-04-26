@@ -78,7 +78,7 @@ fetch(`http://localhost:3003/transactions/${newId}`, {
            Amount:
            <input type="text" name="amount" value={Transaction.amount} onChange={handleChange} required />
          </label>
-         <button  style={{color:'red'}} type="submit">Add Transaction</button>
+         <button  type="submit">Add Transaction</button>
        </form>
      
     )
