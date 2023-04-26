@@ -32,7 +32,7 @@ function TransTable(){
      .then((data) => setTransactions(data));
  }, [])
  const handleDelete = id => {
-  const newData = data.filter(row => row.id !== id);
+  const newData = data.filter(Transaction => Transaction.id !== id);
   setData(newData); 
 
 // DELETE request to remove the transaction data from the JSON file
@@ -47,10 +47,10 @@ headers: {
 .catch(error => console.log(error));
 };
 
-const filteredData = data.filter(row => row.description.toLowerCase().includes(searchTerm.toLowerCase()));
+const filteredData = data.filter(Transaction => Transaction.description.toLowerCase().includes(searchTerm.toLowerCase()));
     return (<div className="Trans">
     <h1>Transactions</h1>
-    <table>
+    <table id='table'>
       <thead>
         <tr>
           <th>ID</th>
@@ -62,6 +62,8 @@ const filteredData = data.filter(row => row.description.toLowerCase().includes(s
           <th>Category</th>
           
           <th>Amount</th>
+
+          <th>Button</th>
         </tr>
       </thead>
       <tbody>
