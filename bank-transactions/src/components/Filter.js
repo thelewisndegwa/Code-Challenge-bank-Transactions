@@ -6,7 +6,9 @@ import { useState, useEffect } from "react"
 
 function Filter(){
     const [Transaction, setTransaction] = useState([]);
+
     const [searchTerm, setSearchTerm] = useState('');
+   
     const handleSearch = e => {
         setSearchTerm(e.target.value);
       };
@@ -18,7 +20,7 @@ function Filter(){
       <form>
         <input type="text" placeholder="Search by description" value={searchTerm} onChange={handleSearch} />
       </form>
-      
+
 </>
     )
         }
