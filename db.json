@@ -55,6 +55,13 @@
       "category": "Stationery",
       "amount": "10",
       "id": 17
+    },
+    {
+      "date": "2021-12-01",
+      "description": "Bonds",
+      "category": "Income",
+      "amount": "3210",
+      "id": 18
     }
   ]
 }
