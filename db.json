@@ -20,6 +20,13 @@
       "category": "Food",
       "amount": "2000",
       "id": 13
+    },
+    {
+      "date": "2022-06-10",
+      "description": "Bolt",
+      "category": "Transportation",
+      "amount": "900",
+      "id": 14
     }
   ]
 }

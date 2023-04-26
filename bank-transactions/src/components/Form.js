@@ -1,86 +1,103 @@
-import React from "react"
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 
-// 7 35 55
-
-function Form(){
+function Form() {
   const [data, setData] = useState([]);
-  const [Transaction, setFormData] = useState({
+
+  const [transaction, setTransaction] = useState({
     date: '',
     description: '',
     category: '',
     amount: ''
   });
-  
+
   useEffect(() => {
     fetch('http://localhost:3003/transactions')
       .then(response => response.json())
       .then(json => setData(json))
-      .catch(error => alert(error))
+      .catch(error => console.log(error));
   }, []);
-  
-
 
   const handleSubmit = e => {
     e.preventDefault();
-    const newId = data.length + 1;
-    const newTransaction = {
-      id: newId,
-      date: Transaction.date,
-      description: Transaction.description,
-      category: Transaction.category,
-      amount: Transaction.amount
-    };
-    setData([...data, newTransaction]);
-    setFormData({
-      date: '',
-      description: '',
-      category: '',
-      amount: ''
-    });
-    // PUT request to update the JSON file with the new transaction data
-fetch(`http://localhost:3003/transactions/${newId}`, {
-  method: 'PUT',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(newTransaction)
-})
-  .then(response => response.json())
-  
-  .catch(error => console.log(error));
+
+    // POST request to add a new transaction
+    fetch('http://localhost:3003/transactions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(transaction)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to add transaction');
+        }
+        return response.json();
+      })
+      .then(newTransaction => {
+        setData([...data, newTransaction]);
+        setTransaction({
+          date: '',
+          description: '',
+          category: '',
+          amount: ''
+        });
+      })
+      .catch(error => console.log(error));
   };
 
   const handleChange = e => {
-    setFormData({
-      ...Transaction,
+    setTransaction({
+      ...transaction,
       [e.target.name]: e.target.value
     });
   };
 
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Date:
+        <input
+          type="text"
+          name="date"
+          value={transaction.date}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Description:
+        <input
+          type="text"
+          name="description"
+          value={transaction.description}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Category:
+        <input
+          type="text"
+          name="category"
+          value={transaction.category}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <label>
+        Amount:
+        <input
+          type="text"
+          name="amount"
+          value={transaction.amount}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <button type="submit">Add Transaction</button>
+    </form>
+  );
+}
 
-    return (
-        
-     <form onSubmit={handleSubmit}>
-         <label>
-           Date:
-           <input type="text" name="date" value={Transaction.date} onChange={handleChange} required />
-         </label>
-         <label>
-           Description:
-           <input type="text" name="description" value={Transaction.description} onChange={handleChange} required />
-         </label>
-         <label>
-           Category:
-           <input type="text" name="category" value={Transaction.category} onChange={handleChange} required />
-         </label>
-         <label>
-           Amount:
-           <input type="text" name="amount" value={Transaction.amount} onChange={handleChange} required />
-         </label>
-         <button  type="submit">Add Transaction</button>
-       </form>
-     
-    )
-        }
-  export default Form;
+export default Form;
