@@ -1,17 +1,17 @@
 import React from "react"
 import { useState, useEffect } from "react"
 
+// 7 35 55
 
 function Form(){
   const [data, setData] = useState([]);
-  const [formData, setFormData] = useState({
+  const [Transaction, setFormData] = useState({
     date: '',
     description: '',
     category: '',
     amount: ''
   });
-  const [searchTerm, setSearchTerm] = useState('');
-
+  
   useEffect(() => {
     fetch('http://localhost:3003/transactions')
       .then(response => response.json())
@@ -26,10 +26,10 @@ function Form(){
     const newId = data.length + 1;
     const newTransaction = {
       id: newId,
-      date: formData.date,
-      description: formData.description,
-      category: formData.category,
-      amount: formData.amount
+      date: Transaction.date,
+      description: Transaction.description,
+      category: Transaction.category,
+      amount: Transaction.amount
     };
     setData([...data, newTransaction]);
     setFormData({
@@ -53,7 +53,7 @@ fetch(`http://localhost:3003/transactions/${newId}`, {
 
   const handleChange = e => {
     setFormData({
-      ...formData,
+      ...Transaction,
       [e.target.name]: e.target.value
     });
   };
@@ -64,19 +64,19 @@ fetch(`http://localhost:3003/transactions/${newId}`, {
      <form onSubmit={handleSubmit}>
          <label>
            Date:
-           <input type="text" name="date" value={formData.date} onChange={handleChange} required />
+           <input type="text" name="date" value={Transaction.date} onChange={handleChange} required />
          </label>
          <label>
            Description:
-           <input type="text" name="description" value={formData.description} onChange={handleChange} required />
+           <input type="text" name="description" value={Transaction.description} onChange={handleChange} required />
          </label>
          <label>
            Category:
-           <input type="text" name="category" value={formData.category} onChange={handleChange} required />
+           <input type="text" name="category" value={Transaction.category} onChange={handleChange} required />
          </label>
          <label>
            Amount:
-           <input type="text" name="amount" value={formData.amount} onChange={handleChange} required />
+           <input type="text" name="amount" value={Transaction.amount} onChange={handleChange} required />
          </label>
          <button type="submit">Add Transaction</button>
        </form>
