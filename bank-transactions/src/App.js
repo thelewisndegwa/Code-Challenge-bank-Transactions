@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import TransTable from './components/Form';
+import TransTable from './components/Table';
 
 function App() {
   return (
