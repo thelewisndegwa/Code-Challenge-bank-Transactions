@@ -16,7 +16,7 @@ function Form({ setData }) {
       category: transaction.category,
       amount: transaction.amount
     };
-    fetch('http://localhost:3003/transactions', {
+    fetch('https://my-json-server.typicode.com/thelewisndegwa/Code-Challenge-bank-Transactions/transactions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

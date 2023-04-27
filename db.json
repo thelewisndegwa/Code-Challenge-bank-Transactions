@@ -1,20 +1,6 @@
 {
   "transactions": [
     {
-      "id": 11,
-      "date": "2019-12-16",
-      "description": "MTA Vending Machine: MetroCard",
-      "category": "Transportation",
-      "amount": -116.39
-    },
-    {
-      "id": 12,
-      "date": "2022-06-10",
-      "description": "Uber",
-      "category": "Transportation",
-      "amount": "20000"
-    },
-    {
       "date": "2022-07-09",
       "description": "Office lunch",
       "category": "Food",

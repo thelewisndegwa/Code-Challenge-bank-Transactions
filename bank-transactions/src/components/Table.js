@@ -6,7 +6,7 @@ function TransTable() {
 
   useEffect(() => {
     // Fetch data from the API endpoint when the component mounts
-    fetch("http://localhost:3003/transactions")
+    fetch("https://my-json-server.typicode.com/thelewisndegwa/Code-Challenge-bank-Transactions/transactions")
       .then(response => response.json())
       .then(json => setData(json))
       .catch(error => alert(error))
@@ -18,7 +18,7 @@ function TransTable() {
     setData(newData);
 
     // Send a DELETE request to the API to remove the transaction
-    fetch(`http://localhost:3003/transactions/${id}`, {
+    fetch(`https://my-json-server.typicode.com/thelewisndegwa/Code-Challenge-bank-Transactions/transactions/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"
